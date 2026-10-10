@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <link rel="icon" type="image/png" href="aas1.jpg">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASSN Burger - Menyu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #0b0c10;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 30px 15px 40px 15px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* HEADER ANIMATSIYA */
+        header {
+            text-align: center;
+            margin-bottom: 45px;
+            animation: fadeInDown 0.8s ease-out forwards;
+        }
+
+        .brand-title {
+            font-size: 3.2rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #ff9f0a 0%, #ff3b30 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 4px 15px rgba(255, 159, 10, 0.3));
+        }
+
+        .brand-subtitle {
+            color: #8e8e93;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* BO'LIM SARLAVHALARI */
+        .section-title {
+            font-size: 1.6rem;
+            color: #ffffff;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1c1c1e;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background: #ff9f0a;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(255, 159, 10, 0.5);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        /* TAOM KARTOCHKASI */
+        .card {
+            background: #16181f;
+            border: 1px solid #242731;
+            border-radius: 20px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 159, 10, 0.5);
+            box-shadow: 0 10px 25px rgba(255, 159, 10, 0.15);
+        }
+
+        /* RASM RAMKASI */
+        .image-wrapper {
+            width: 100%;
+            height: 150px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #0f1015;
+            margin-bottom: 14px;
+            position: relative;
+            border: 1px solid #232633;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .item-img {
+            transform: scale(1.05);
+        }
+
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #f2f2f7;
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+
+        /* NARX TUGMASI VA NARX TOGGLE */
+        .price-box {
+            width: 100%;
+            height: 46px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .btn-show {
+            width: 100%;
+            height: 100%;
+            background: #1f222e;
+            color: #ff9f0a;
+            border: 1px solid rgba(255, 159, 10, 0.3);
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+
+        .card:hover .btn-show {
+            background: #ff9f0a;
+            color: #000000;
+            box-shadow: 0 4px 15px rgba(255, 159, 10, 0.4);
+        }
+
+        .price-value {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 159, 10, 0.15);
+            color: #ff9f0a;
+            border: 1.5px dashed #ff9f0a;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            user-select: none;
+        }
+
+        /* PASTKI IZOH BO'LIMI */
+        footer {
+            margin-top: 60px;
+            padding: 25px 20px;
+            background: linear-gradient(180deg, rgba(22, 24, 31, 0.5) 0%, #16181f 100%);
+            border: 1px solid #242731;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer-note {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ff9f0a;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-subnote {
+            font-size: 0.95rem;
+            color: #a0a5b5;
+            line-height: 1.5;
+        }
+
+        /* ANIMATSIYALAR */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* MOBIL MOSLASHUV */
+        @media (max-width: 480px) {
+            .brand-title {
+                font-size: 2.3rem;
+            }
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .card {
+                padding: 12px;
+            }
+            .image-wrapper {
+                height: 110px;
+            }
+            .item-name {
+                font-size: 0.95rem;
+            }
+            .footer-note {
+                font-size: 1.05rem;
+            }
+            .footer-subnote {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- OSHXONA NOMI -->
+        <header>
+            <h1 class="brand-title">ASSN BURGER</h1>
+            <p class="brand-subtitle">Mazali va sifatli taomlar menyusi</p>
+        </header>
+
+        <!-- PIZZA -->
+        <div class="section-title">Pizza</div>
+        <div class="grid">
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="PEPERONIY.JPG" class="item-img" alt="Pepperoni Pizza">
+                </div>
+                <div class="item-name">Pepperoni Pizza</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">75,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="GOSHTLI.JPG" class="item-img" alt="Go'shtli Pizza">
+                </div>
+                <div class="item-name">Go'shtli Pizza</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">80,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="PIIZA.JPG" class="item-img" alt="Assorti Pizza">
+                </div>
+                <div class="item-name">Assorti Pizza</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">80,000 so'm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KABOBLAR -->
+        <div class="section-title">Kaboblar</div>
+        <div class="grid">
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="patir.jpg" class="item-img" alt="Patir Kabob">
+                </div>
+                <div class="item-name">Patir Kabob</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">45,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="DONAR.JPG" class="item-img" alt="Donar">
+                </div>
+                <div class="item-name">Donar</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">40,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="DONARblyuda.jpg" class="item-img" alt="Donar Blyuda">
+                </div>
+                <div class="item-name">Donar Blyuda</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">50,000 so'm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LAVASH -->
+        <div class="section-title">Lavash</div>
+        <div class="grid">
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="lavash.jpg" class="item-img" alt="Oddiy Lavash">
+                </div>
+                <div class="item-name">Oddiy Lavash</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">35,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="sirniylavash.jpg" class="item-img" alt="Sirniy Lavash">
+                </div>
+                <div class="item-name">Sirniy Lavash</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">35,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="tandirlavash.jpg" class="item-img" alt="Tandir Lavash">
+                </div>
+                <div class="item-name">Tandir Lavash</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">40,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="biglavash.jpg" class="item-img" alt="Big Lavash">
+                </div>
+                <div class="item-name">Big Lavash</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">45,000 so'm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BURGER -->
+        <div class="section-title">Burger</div>
+        <div class="grid">
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="chizburger.jpg" class="item-img" alt="Chizburger">
+                </div>
+                <div class="item-name">Chizburger</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">28,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="dabl.jpg" class="item-img" alt="Dabl Chizburger">
+                </div>
+                <div class="item-name">Dabl Chizburger</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">45,000 so'm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HOT-DOG -->
+        <div class="section-title">Hot-Dog</div>
+        <div class="grid">
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="xod.jpg" class="item-img" alt="Oddiy Hot-Dog">
+                </div>
+                <div class="item-name">Oddiy Hot-Dog</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">20,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="xod dog.jpg" class="item-img" alt="Qirollik Hot-Dog">
+                </div>
+                <div class="item-name">Qirollik Hot-Dog</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">25,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="xod1.jpg" class="item-img" alt="Dabl Hot-Dog">
+                </div>
+                <div class="item-name">Dabl Hot-Dog</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">30,000 so'm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOVUQLI TAOMLAR VA BOSHQA -->
+        <div class="section-title">Tovuqli Taomlar va Boshqalar</div>
+        <div class="grid">
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="kfs.jpg" class="item-img" alt="KFC (1 kg)">
+                </div>
+                <div class="item-name">KFC (1 kg)</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">80,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="tovuq.jpg" class="item-img" alt="KFC Shashlik (1 kg)">
+                </div>
+                <div class="item-name">KFC Shashlik (1 kg)</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">80,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="setka.jpg" class="item-img" alt="Setka Tovuq">
+                </div>
+                <div class="item-name">Setka Tovuq</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">70,000 so'm</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="image-wrapper">
+                    <img src="kortoshka.jpg" class="item-img" alt="Kartoshka Fri">
+                </div>
+                <div class="item-name">Kartoshka Fri</div>
+                <div class="price-box" onclick="togglePrice(this)">
+                    <div class="btn-show">Narxni ko'rish</div>
+                    <div class="price-value">15,000 so'm</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PASTKI IZOH BO'LIMI -->
+        <footer>
+            <div class="footer-note">Juda mazali, lazzatli va har doim yangi taomlar! ✨</div>
+            <div class="footer-subnote">ASSN Burger — haqiqiy ta'm zavqi va yuqori sifat kafolati! Yoqimli ishtaha! 😋</div>
+        </footer>
+    </div>
+
+    <script>
+        function togglePrice(element) {
+            const btn = element.querySelector('.btn-show');
+            const price = element.querySelector('.price-value');
+
+            if (price.style.display === 'flex') {
+                price.style.display = 'none';
+                btn.style.display = 'flex';
+            } else {
+                btn.style.display = 'none';
+                price.style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>
